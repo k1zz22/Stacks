@@ -1,0 +1,62 @@
+def get_number():
+    try:
+        user_input = int(input("Enter how many stack you want to enter: "))
+        return user_input
+    except ValueError:
+        return get_number()
+
+
+def create_message(stacks):
+    message = "You have stacks of "
+    if len(stacks) == 1:
+        message = f"You have stack of {stacks[0]}."
+
+    else:
+        for i in range(len(stacks)):
+            if i == len(stacks) - 1:
+                message += f"and {stacks[i]}."
+            else:
+                message += f"{stacks[i]}, "
+    return message
+
+
+def my_stacks(user_input_number):
+    my_stacks_array = []
+    counter = 1
+    while user_input_number != 0:
+        user_input_stacks = input(f"Enter stack #{counter}: ")
+        if user_input_stacks.isdigit():
+            continue
+        else:
+            my_stacks_array.append(user_input_stacks)
+            user_input_number -= 1
+            counter += 1
+
+    message = create_message(my_stacks_array)
+
+    print(message)
+    return my_stacks_array
+
+
+def remove_stacks(my_stacks_args):
+    my_stack = my_stacks_args
+    while True:
+        if len(my_stack) == 0:
+            return "You do not have any stack left."
+        user_input = input("Click R to remove an item: ")
+        if user_input == "R":
+            if len(my_stack) == 0:
+                return "You do not have any item left on your stack."
+            else:
+                my_stack.pop()
+                if len(my_stack) != 0:
+                    message = create_message(my_stack)
+                    print(message)
+
+        else:
+            continue
+
+
+stack_limit = get_number()
+my_stack_array = my_stacks(stack_limit)
+print(remove_stacks(my_stack_array))
